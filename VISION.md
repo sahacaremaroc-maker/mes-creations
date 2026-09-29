@@ -39,7 +39,7 @@ et enrichit chaque consultation.
 
 ## Étapes possibles (plus tard)
 - [ ] Déposer le livre dans `livre/`
-- [ ] Définir la liste des premiers booklets
-- [ ] Rédiger un premier booklet modèle
+- [x] Définir la liste des premiers booklets
+- [x] Rédiger les 8 premiers booklets
 - [ ] Créer une page d'accueil simple
 - [ ] Ajouter les langues
