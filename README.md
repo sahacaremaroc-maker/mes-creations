@@ -5,6 +5,8 @@ guidance, guérison, connexion à l'univers, découverte de sa mission et de son
 
 > Projet construit **pas à pas**. Voir [VISION.md](VISION.md) pour la direction globale
 > et [MON-CHEMIN.md](MON-CHEMIN.md) pour mon parcours d'intuitive internationale master.
+>
+> Première vision de la plateforme : [maquette/index.html](maquette/index.html)
 
 ## Structure
 

@@ -1,0 +1,501 @@
+<title>Plateforme Nour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Manrope:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600&display=swap">
+<style>
+/* Layout : une nuit qui mène à l'aube. Bande nocturne en ouverture, puis des sections de plus en plus claires, comme un chemin. */
+:root {
+  --bg: #F2F3F8;
+  --surface: #FFFFFF;
+  --ink: #151A33;
+  --muted: #565D7E;
+  --line: #D8DBE8;
+  --accent: #A8701A;
+  --accent-soft: #F4E7CD;
+  --night: #10142A;
+  --night-ink: #ECE8DE;
+  --night-muted: #A6ACC8;
+  --gold: #E3B252;
+  --font-display: "Gloock", "Georgia", "Times New Roman", serif;
+  --font-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ar: "Noto Naskh Arabic", "Geeza Pro", "Arial", serif;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(1.9rem, 4vw, 2.6rem);
+  --step-4: clamp(2.5rem, 7vw, 4.4rem);
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C0F1F; --surface: #151A31; --ink: #E9E7E1; --muted: #9AA0BD; --line: #272D4A;
+    --accent: #E3B252; --accent-soft: #2B2820; --night: #080B18; --night-ink: #ECE8DE;
+    --night-muted: #A6ACC8; --gold: #E3B252; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C0F1F; --surface: #151A31; --ink: #E9E7E1; --muted: #9AA0BD; --line: #272D4A;
+  --accent: #E3B252; --accent-soft: #2B2820; --night: #080B18; --night-ink: #ECE8DE;
+  --night-muted: #A6ACC8; --gold: #E3B252; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--step-0); line-height: 1.6;
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1080px; margin-inline: auto; padding-inline: 20px; }
+.eyebrow { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--accent); }
+.lede { color: var(--muted); max-width: 60ch; }
+section { padding-block: clamp(56px, 9vw, 96px); }
+.section-head { display: grid; gap: 12px; margin-bottom: 36px; }
+.section-head h2 { font-size: var(--step-3); }
+
+/* Bandeau maquette */
+.proto { background: var(--accent-soft); color: var(--ink); font-size: .85rem; text-align: center; padding: 8px 16px; }
+.proto strong { color: var(--accent); }
+
+/* Nuit */
+.night { background: var(--night); color: var(--night-ink); position: relative; overflow: hidden; }
+.night canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.nav { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; }
+.logo { font-family: var(--font-display); font-size: 1.6rem; display: flex; align-items: baseline; gap: 10px; }
+.logo small { font-family: var(--font-body); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--night-muted); }
+.nav-links { display: flex; gap: 22px; font-size: .9rem; color: var(--night-muted); }
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--night-ink); }
+.langs { display: flex; gap: 4px; border: 1px solid rgba(166,172,200,.35); border-radius: 999px; padding: 3px; }
+.langs button {
+  background: none; border: 0; color: var(--night-muted); font: inherit; font-size: .8rem;
+  padding: 4px 12px; border-radius: 999px; cursor: pointer;
+}
+.langs button[aria-pressed="true"] { background: var(--night-ink); color: var(--night); }
+.langs button[data-lang="ar"] { font-family: var(--font-ar); }
+
+.hero { position: relative; z-index: 2; display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: center; padding-block: 48px 80px; }
+.hero-text { display: grid; gap: 22px; min-width: 0; }
+.hero h1 { font-size: var(--step-4); }
+.hero h1 em { font-style: normal; color: var(--gold); }
+.hero p { color: var(--night-muted); font-size: 1.1rem; max-width: 46ch; }
+.hero-text[dir="rtl"] h1, .hero-text[dir="rtl"] p { font-family: var(--font-ar); }
+.hero-text[dir="rtl"] h1 { font-weight: 600; line-height: 1.5; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 600; font-size: .95rem;
+  padding: 12px 22px; border-radius: 999px; cursor: pointer; text-decoration: none; border: 1px solid transparent;
+}
+.btn-gold { background: var(--gold); color: #1A1606; }
+.btn-ghost { background: transparent; color: var(--night-ink); border-color: rgba(236,232,222,.35); }
+.btn-gold:hover { filter: brightness(1.08); }
+.btn-ghost:hover { border-color: var(--night-ink); }
+
+.moon-card { display: grid; gap: 18px; justify-items: center; text-align: center; }
+.moon {
+  width: min(220px, 60vw); aspect-ratio: 1; max-width: 100%; border-radius: 50%;
+  background: radial-gradient(circle at 38% 36%, #F7F1E1 0%, #E4D9BE 55%, #C9BD9E 100%);
+  box-shadow: 0 0 80px rgba(227,178,82,.25), inset -26px -10px 0 rgba(16,20,42,.55);
+}
+.moon-note { font-size: .85rem; color: var(--night-muted); }
+.moon-note strong { color: var(--night-ink); font-weight: 600; }
+
+/* Par où commencer */
+.finder { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; align-items: start; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  font: inherit; font-size: .95rem; padding: 10px 18px; border-radius: 999px; cursor: pointer;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line);
+}
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.result {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 28px; display: grid; gap: 16px; min-width: 0;
+}
+.result-meta { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: .85rem; color: var(--muted); }
+.result h3 { font-size: var(--step-2); }
+.exercise { background: var(--accent-soft); border-radius: 10px; padding: 16px 18px; display: grid; gap: 4px; }
+.exercise b { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.care { font-size: .85rem; color: var(--muted); }
+
+/* Piliers */
+.pillars { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.pillar { display: grid; grid-template-columns: 2.2rem 1fr; gap: 4px 14px; padding-block: 22px; border-top: 1px solid var(--line); }
+.pillar .glyph { font-family: var(--font-display); color: var(--accent); font-size: 1.4rem; line-height: 1.2; grid-row: span 2; }
+.pillar h3 { font-size: var(--step-1); }
+.pillar p { color: var(--muted); font-size: .95rem; }
+
+/* Livre */
+.book-row { display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: center; }
+.book {
+  width: 200px; max-width: 100%; aspect-ratio: 2 / 3; border-radius: 4px 12px 12px 4px; padding: 26px 20px;
+  background: var(--night); color: var(--night-ink); display: flex; flex-direction: column; justify-content: space-between;
+  box-shadow: inset 8px 0 0 rgba(0,0,0,.25), 0 24px 50px rgba(16,20,42,.28);
+}
+.book .t { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.2; }
+.book .a { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.book-text { display: grid; gap: 18px; min-width: 0; }
+.book-text h2 { font-size: var(--step-3); }
+.steps { display: flex; flex-wrap: wrap; gap: 8px; }
+.steps span { font-size: .85rem; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+
+/* Bibliothèque de booklets */
+.shelf { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.booklet {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px;
+  display: grid; grid-template-rows: auto 1fr auto; gap: 10px; min-height: 180px;
+}
+.booklet .n { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.booklet h3 { font-size: 1.2rem; }
+.booklet .d { font-size: .85rem; color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+.tag-ex { display: inline-block; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+/* Rêves & hypnose */
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: grid; gap: 16px; align-content: start; min-width: 0; }
+.panel h3 { font-size: var(--step-2); }
+.journal { border-left: 2px solid var(--accent); padding-left: 18px; display: grid; gap: 12px; }
+.journal .date { font-size: .85rem; color: var(--muted); }
+.journal dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; font-size: .95rem; }
+.journal dt { color: var(--muted); }
+.journal dd { margin: 0; }
+.journal ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: .95rem; display: grid; gap: 4px; }
+
+.breath { display: grid; justify-items: center; gap: 18px; padding-block: 10px; }
+.orb-wrap { width: 180px; height: 180px; max-width: 100%; display: grid; place-items: center; }
+.orb {
+  width: 110px; height: 110px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 38%, var(--gold), var(--accent) 70%);
+  opacity: .85; transform: scale(.8); transition-property: transform; transition-timing-function: ease-in-out;
+}
+.breath-label { font-family: var(--font-display); font-size: 1.5rem; min-height: 2.2rem; text-align: center; }
+.breath-sub { font-size: .9rem; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+.btn-ink { background: var(--ink); color: var(--bg); }
+
+/* Guide */
+.guide { display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; }
+.portrait {
+  width: 180px; aspect-ratio: 1; max-width: 100%; border-radius: 50%; border: 1px dashed var(--muted);
+  display: grid; place-items: center; text-align: center; font-size: .85rem; color: var(--muted); padding: 20px;
+}
+.guide-text { display: grid; gap: 14px; min-width: 0; }
+.guide-text h2 { font-size: var(--step-3); }
+.creds { display: flex; flex-wrap: wrap; gap: 8px; }
+.creds span { font-size: .85rem; padding: 6px 14px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+
+/* Séances */
+.offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.offer { border-top: 2px solid var(--ink); padding-top: 18px; display: grid; gap: 8px; align-content: start; }
+.offer h3 { font-size: var(--step-1); }
+.offer p { color: var(--muted); font-size: .95rem; }
+.offer .meta { font-size: .85rem; font-weight: 600; color: var(--accent); }
+
+footer { border-top: 1px solid var(--line); padding-block: 36px; }
+.foot { display: grid; gap: 14px; font-size: .9rem; color: var(--muted); }
+.foot .ethic { color: var(--ink); max-width: 70ch; }
+
+@media (max-width: 860px) {
+  .nav-links { display: none; }
+  .hero, .finder, .duo, .book-row, .guide { grid-template-columns: 1fr; }
+  .moon-card { order: -1; }
+  .moon { width: 140px; }
+  .shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .offers { grid-template-columns: 1fr; }
+  .pillars { grid-template-columns: 1fr; }
+  .book { width: 160px; }
+  .portrait { width: 140px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orb { transition: none !important; }
+}
+</style>
+
+<div class="proto"><strong>Maquette</strong> · première vision de la plateforme · nom « Nour » provisoire</div>
+
+<header class="night">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <nav class="nav" aria-label="Navigation principale">
+      <div class="logo">Nour <small>Guidance intuitive</small></div>
+      <div class="nav-links">
+        <a href="#commencer">Commencer</a>
+        <a href="#livre">Le livre</a>
+        <a href="#booklets">Booklets</a>
+        <a href="#reves">Rêves &amp; hypnose</a>
+        <a href="#seances">Séances</a>
+      </div>
+      <div class="langs" role="group" aria-label="Langue">
+        <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="ar" aria-pressed="false">عربي</button>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-text" id="heroText">
+        <span class="eyebrow" id="heroEyebrow" style="color: var(--gold)">Guidance · Guérison · Connexion</span>
+        <h1 id="heroTitle">Retrouve ton <em>vrai soi</em>.</h1>
+        <p id="heroSub">Une plateforme pour guérir, comprendre tes rêves, découvrir ta mission et vivre mieux, partout dans le monde.</p>
+        <div class="ctas">
+          <a class="btn btn-gold" href="#commencer" id="heroCta1">Commencer mon chemin</a>
+          <a class="btn btn-ghost" href="#livre" id="heroCta2">Découvrir le livre</a>
+        </div>
+      </div>
+      <div class="moon-card">
+        <div class="moon" role="img" aria-label="Lune gibbeuse décroissante"></div>
+        <p class="moon-note">Cette nuit : <strong>lune gibbeuse décroissante</strong><br>Un temps pour lâcher ce qui pèse.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="commencer">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Par où commencer</span>
+        <h2>Qu'est-ce qui te pèse aujourd'hui ?</h2>
+        <p class="lede">Choisis ce qui te parle. La plateforme te propose le booklet adapté et un premier exercice à faire tout de suite.</p>
+      </div>
+      <div class="finder">
+        <div class="chips" role="group" aria-label="Choisis un besoin" id="chips"></div>
+        <article class="result" aria-live="polite" id="result"></article>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top: 0">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Ce que la plateforme t'apporte</span>
+        <h2>Sept chemins vers une vie meilleure</h2>
+      </div>
+      <div class="pillars">
+        <div class="pillar"><span class="glyph">✦</span><h3>Guidance intuitive</h3><p>Des repères clairs quand tu ne sais plus quelle direction prendre.</p></div>
+        <div class="pillar"><span class="glyph">✧</span><h3>Guérison</h3><p>Apaiser les blessures psychologiques et écouter les messages du corps.</p></div>
+        <div class="pillar"><span class="glyph">☾</span><h3>Connexion à l'univers</h3><p>Retrouver du sens, de l'alignement et la confiance dans la vie.</p></div>
+        <div class="pillar"><span class="glyph">◎</span><h3>Mission &amp; vrai soi</h3><p>Découvrir qui tu es vraiment et pourquoi tu es là.</p></div>
+        <div class="pillar"><span class="glyph">❋</span><h3>Nouvelle identité</h3><p>Renforcer tes traits, dépasser tes blocages et devenir la personne que tu choisis d'être.</p></div>
+        <div class="pillar"><span class="glyph">◌</span><h3>Hypnose &amp; auto-hypnose</h3><p>Des séances guidées pour reprogrammer tes pensées et te détendre en profondeur.</p></div>
+        <div class="pillar"><span class="glyph">☽</span><h3>Lecture des rêves</h3><p>Comprendre ce que ton inconscient te dit chaque nuit.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="livre" style="background: var(--surface)">
+    <div class="wrap book-row">
+      <div class="book" role="img" aria-label="Couverture du livre fondateur">
+        <span class="a">Le livre fondateur</span>
+        <span class="t">Titre à venir</span>
+        <span class="a">Nour</span>
+      </div>
+      <div class="book-text">
+        <span class="eyebrow">Le livre</span>
+        <h2>La base de toute la plateforme</h2>
+        <p class="lede">Ton livre porte ta vision et ta méthode. Chaque booklet en reprend un chapitre et le transforme en programme pratique, jour après jour.</p>
+        <div class="steps"><span>Lire en ligne</span><span>Version papier</span><span>FR · EN · AR</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="booklets">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Bibliothèque</span>
+        <h2>Un booklet pour chaque problème</h2>
+        <p class="lede">Courts, pratiques, à suivre sur quelques jours. <span class="tag-ex">Exemples de titres</span></p>
+      </div>
+      <div class="shelf" id="shelf"></div>
+    </div>
+  </section>
+
+  <section id="reves" style="padding-top: 0">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Rêves &amp; hypnose</span>
+        <h2>La nuit parle, le souffle apaise</h2>
+      </div>
+      <div class="duo">
+        <div class="panel">
+          <div style="display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap">
+            <h3>Journal des rêves</h3><span class="tag-ex">Exemple</span>
+          </div>
+          <div class="journal">
+            <span class="date">Nuit du 28 septembre 2026 · lune gibbeuse décroissante</span>
+            <dl>
+              <dt>Symboles</dt><dd>Une eau calme, une porte bleue, une voix connue</dd>
+              <dt>Émotion</dt><dd>Paix, puis hésitation</dd>
+            </dl>
+            <ul>
+              <li>Quelle porte hésites-tu à ouvrir dans ta vie ?</li>
+              <li>À qui appartient cette voix, et que te dit-elle ?</li>
+            </ul>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Auto-hypnose : 1 minute de souffle</h3>
+          <p class="lede">Inspire 4 secondes, expire 6 secondes. Suis le cercle.</p>
+          <div class="breath">
+            <div class="orb-wrap"><div class="orb" id="orb"></div></div>
+            <div class="breath-label" id="breathLabel">On commence ?</div>
+            <div class="breath-sub" id="breathSub">6 cycles · 60 secondes</div>
+            <button type="button" class="btn btn-ink" id="breathBtn">Commencer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: var(--surface)">
+    <div class="wrap guide">
+      <div class="portrait">Ta photo ici</div>
+      <div class="guide-text">
+        <span class="eyebrow">Ta guide</span>
+        <h2>Intuitive internationale</h2>
+        <p class="lede">J'accompagne chaque personne à retrouver son vrai soi, avec mon intuition, mon expérience et ma propre méthode.</p>
+        <div class="creds"><span>Intuition</span><span>Hypnose &amp; auto-hypnose</span><span>Lecture des rêves</span><span>Méthode : nom à définir</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="seances">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Séances</span>
+        <h2>En ligne, partout dans le monde</h2>
+      </div>
+      <div class="offers">
+        <div class="offer"><h3>Séance découverte</h3><p>Un premier échange pour comprendre ton besoin et ressentir ton énergie.</p><span class="meta">Visio · tarif à définir</span></div>
+        <div class="offer"><h3>Lecture de rêve</h3><p>Tu envoies ton rêve, je t'aide à en lire les symboles et le message.</p><span class="meta">Écrit ou visio · tarif à définir</span></div>
+        <div class="offer"><h3>Accompagnement 21 jours</h3><p>Un booklet, des séances d'hypnose et un suivi pour transformer un problème en profondeur.</p><span class="meta">Programme · tarif à définir</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p class="ethic">Cet accompagnement complète un suivi médical ou psychologique, sans le remplacer. En cas de souffrance grave, contacte un professionnel de santé.</p>
+    <p>Nour · Guidance intuitive · FR · EN · عربي · Première vision, septembre 2026</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Ciel étoilé
+  var canvas = document.getElementById('sky');
+  var ctx = canvas.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var stars = [];
+  function resize() {
+    var r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    canvas.width = r.width * dpr; canvas.height = r.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    stars = [];
+    var n = Math.round(r.width * r.height / 5000);
+    for (var i = 0; i < n; i++) {
+      stars.push({ x: Math.random() * r.width, y: Math.random() * r.height, s: Math.random() * 1.3 + .2, p: Math.random() * Math.PI * 2 });
+    }
+    draw(0);
+  }
+  function draw(t) {
+    var r = canvas.getBoundingClientRect();
+    ctx.clearRect(0, 0, r.width, r.height);
+    for (var i = 0; i < stars.length; i++) {
+      var st = stars[i];
+      var a = reduce ? .7 : .45 + .45 * Math.sin(t / 1400 + st.p);
+      ctx.fillStyle = 'rgba(236,232,222,' + a.toFixed(2) + ')';
+      ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  if (!reduce) { (function loop(t) { draw(t); requestAnimationFrame(loop); })(0); }
+
+  // Langues du hero
+  var copy = {
+    fr: { dir: 'ltr', eyebrow: 'Guidance · Guérison · Connexion', title: 'Retrouve ton <em>vrai soi</em>.', sub: 'Une plateforme pour guérir, comprendre tes rêves, découvrir ta mission et vivre mieux, partout dans le monde.', c1: 'Commencer mon chemin', c2: 'Découvrir le livre' },
+    en: { dir: 'ltr', eyebrow: 'Guidance · Healing · Connection', title: 'Find your <em>true self</em>.', sub: 'A platform to heal, understand your dreams, discover your mission and live better, anywhere in the world.', c1: 'Start my journey', c2: 'Discover the book' },
+    ar: { dir: 'rtl', eyebrow: 'إرشاد · شفاء · اتصال', title: 'اكتشف <em>ذاتك الحقيقية</em>', sub: 'منصة للشفاء وفهم أحلامك واكتشاف رسالتك والعيش بشكل أفضل، في أي مكان في العالم.', c1: 'ابدأ طريقك', c2: 'اكتشف الكتاب' }
+  };
+  var heroText = document.getElementById('heroText');
+  document.querySelectorAll('.langs button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var c = copy[b.dataset.lang];
+      document.querySelectorAll('.langs button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      heroText.setAttribute('dir', c.dir);
+      document.getElementById('heroEyebrow').textContent = c.eyebrow;
+      document.getElementById('heroTitle').innerHTML = c.title;
+      document.getElementById('heroSub').textContent = c.sub;
+      document.getElementById('heroCta1').textContent = c.c1;
+      document.getElementById('heroCta2').textContent = c.c2;
+    });
+  });
+
+  // Besoins et booklets
+  var needs = [
+    { k: 'Anxiété', b: 'Apaiser le mental', d: 21, ex: 'Respiration 4-6 : inspire 4 secondes, expire 6 secondes, pendant 3 minutes.' },
+    { k: 'Sommeil', b: 'Retrouver la nuit', d: 14, ex: 'Avant de dormir, pose une intention pour tes rêves et écris-la sur un papier.' },
+    { k: 'Confiance en soi', b: 'Ma nouvelle identité', d: 30, ex: 'Écris trois qualités que tu veux incarner. Relis-les chaque matin à voix haute.' },
+    { k: 'Deuil', b: 'Traverser la perte', d: 40, ex: 'Écris une lettre à la personne ou à ce que tu as perdu. Tu n\'as pas besoin de l\'envoyer.' },
+    { k: 'Relations', b: 'Liens et limites', d: 21, ex: 'Note une situation où tu as dit oui alors que tu pensais non. Que voulais-tu vraiment ?' },
+    { k: 'Douleurs du corps', b: 'Écouter le corps', d: 14, ex: 'Scan corporel de 5 minutes : parcours ton corps de la tête aux pieds et nomme chaque sensation.', care: true },
+    { k: 'Rêves récurrents', b: 'Lire ses rêves', d: 21, ex: 'Au réveil, note ton rêve avant de parler ou de regarder ton téléphone.' },
+    { k: 'Sens de la vie', b: 'Trouver ma mission', d: 30, ex: 'Note les moments où tu as perdu la notion du temps. Ils montrent le chemin de ta mission.' }
+  ];
+  var chips = document.getElementById('chips'), result = document.getElementById('result');
+  function show(i) {
+    var n = needs[i];
+    chips.querySelectorAll('.chip').forEach(function (c, j) { c.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+    result.innerHTML =
+      '<div class="result-meta"><span>Booklet n°' + (i + 1) + '</span><span>' + n.d + ' jours</span><span>' + n.k + '</span></div>' +
+      '<h3>' + n.b + '</h3>' +
+      '<div class="exercise"><b>Premier exercice, maintenant</b><span>' + n.ex + '</span></div>' +
+      (n.care ? '<p class="care">Pour toute douleur physique, consulte aussi un médecin.</p>' : '') +
+      '<div><a class="btn btn-ink" href="#booklets">Ouvrir le booklet</a></div>';
+  }
+  needs.forEach(function (n, i) {
+    var c = document.createElement('button');
+    c.type = 'button'; c.className = 'chip'; c.textContent = n.k;
+    c.addEventListener('click', function () { show(i); });
+    chips.appendChild(c);
+  });
+  show(0);
+
+  var shelf = document.getElementById('shelf');
+  needs.forEach(function (n, i) {
+    var el = document.createElement('article');
+    el.className = 'booklet';
+    el.innerHTML = '<span class="n">Booklet n°' + (i + 1) + ' · ' + n.k + '</span><h3>' + n.b + '</h3><span class="d">' + n.d + ' jours</span>';
+    shelf.appendChild(el);
+  });
+
+  // Souffle
+  var orb = document.getElementById('orb'), label = document.getElementById('breathLabel'),
+      sub = document.getElementById('breathSub'), btn = document.getElementById('breathBtn');
+  var timer = null, running = false;
+  function stop(msg) {
+    clearTimeout(timer); running = false;
+    orb.style.transitionDuration = '1s'; orb.style.transform = 'scale(.8)';
+    label.textContent = msg; sub.textContent = '6 cycles · 60 secondes'; btn.textContent = 'Commencer';
+  }
+  function phase(cycle) {
+    if (cycle > 6) { stop('Bravo. Reste un instant dans ce calme.'); return; }
+    sub.textContent = 'Cycle ' + cycle + ' sur 6';
+    label.textContent = 'Inspire…';
+    orb.style.transitionDuration = '4s'; orb.style.transform = reduce ? 'scale(.8)' : 'scale(1.45)';
+    timer = setTimeout(function () {
+      label.textContent = 'Expire…';
+      orb.style.transitionDuration = '6s'; orb.style.transform = 'scale(.8)';
+      timer = setTimeout(function () { phase(cycle + 1); }, 6000);
+    }, 4000);
+  }
+  btn.addEventListener('click', function () {
+    if (running) { stop('On recommence ?'); return; }
+    running = true; btn.textContent = 'Arrêter'; phase(1);
+  });
+})();
+</script>
