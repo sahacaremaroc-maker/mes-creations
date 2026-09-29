@@ -186,12 +186,63 @@ section { padding-block: clamp(56px, 9vw, 96px); }
 .creds { display: flex; flex-wrap: wrap; gap: 8px; }
 .creds span { font-size: .85rem; padding: 6px 14px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
 
-/* Séances */
-.offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.offer { border-top: 2px solid var(--ink); padding-top: 18px; display: grid; gap: 8px; align-content: start; }
+/* Consultations */
+.consult { display: grid; grid-template-columns: 1fr 1.1fr; gap: 32px; align-items: start; }
+.offers { display: grid; gap: 12px; min-width: 0; }
+.offer {
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: baseline; text-align: left;
+  font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 12px; padding: 18px 20px; cursor: pointer; width: 100%;
+}
+.offer:hover { border-color: var(--accent); }
+.offer[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
 .offer h3 { font-size: var(--step-1); }
-.offer p { color: var(--muted); font-size: .95rem; }
-.offer .meta { font-size: .85rem; font-weight: 600; color: var(--accent); }
+.offer .price { font-family: var(--font-display); font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.offer p { color: var(--muted); font-size: .92rem; grid-column: 1 / -1; }
+.offer .meta { font-size: .8rem; font-weight: 600; color: var(--accent); grid-column: 1 / -1; }
+.offer.featured { background: var(--night); color: var(--night-ink); border-color: var(--night); }
+.offer.featured p { color: var(--night-muted); }
+.offer.featured .meta { color: var(--gold); }
+.offer.featured[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--gold); }
+.price-note { font-size: .82rem; color: var(--muted); }
+
+.booking { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: grid; gap: 20px; min-width: 0; }
+.stepper { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; list-style: none; margin: 0; padding: 0; }
+.stepper li { font-size: .75rem; color: var(--muted); border-top: 3px solid var(--line); padding-top: 8px; }
+.stepper li.done, .stepper li.now { border-color: var(--accent); color: var(--ink); }
+.stepper li.now { font-weight: 700; }
+.booking h3 { font-size: var(--step-2); }
+.days { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; }
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 8px; }
+.pick {
+  font: inherit; font-size: .9rem; padding: 10px 6px; border-radius: 10px; cursor: pointer; text-align: center;
+  background: var(--bg); color: var(--ink); border: 1px solid var(--line); font-variant-numeric: tabular-nums;
+}
+.pick small { display: block; font-size: .72rem; color: var(--muted); text-transform: capitalize; }
+.pick:hover:not(:disabled) { border-color: var(--accent); }
+.pick[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.pick[aria-pressed="true"] small { color: var(--bg); }
+.pick:disabled { opacity: .4; cursor: not-allowed; text-decoration: line-through; }
+.tz { font-size: .82rem; color: var(--muted); }
+.field { display: grid; gap: 6px; }
+.field label { font-size: .85rem; font-weight: 600; }
+.field input, .field textarea {
+  font: inherit; font-size: .95rem; padding: 10px 12px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink); width: 100%;
+}
+.field textarea { min-height: 84px; resize: vertical; }
+.consent { display: grid; grid-template-columns: auto 1fr; gap: 10px; font-size: .85rem; color: var(--muted); align-items: start; }
+.consent input { margin-top: 4px; accent-color: var(--accent); }
+.recap { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; margin: 0; font-size: .95rem; }
+.recap dt { color: var(--muted); }
+.recap dd { margin: 0; font-weight: 600; }
+.recap .total { font-family: var(--font-display); font-size: 1.4rem; font-weight: 400; }
+.paynote { background: var(--accent-soft); border-radius: 10px; padding: 14px 16px; font-size: .88rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; }
+.link-btn { background: none; border: 0; font: inherit; font-size: .9rem; color: var(--muted); cursor: pointer; text-decoration: underline; padding: 8px 0; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.hint { font-size: .85rem; color: var(--muted); }
+.done-mark { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 1.6rem; }
 
 footer { border-top: 1px solid var(--line); padding-block: 36px; }
 .foot { display: grid; gap: 14px; font-size: .9rem; color: var(--muted); }
@@ -203,7 +254,8 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
   .moon-card { order: -1; }
   .moon { width: 140px; }
   .shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .offers { grid-template-columns: 1fr; }
+  .consult { grid-template-columns: 1fr; }
+  .stepper li { font-size: .68rem; }
   .pillars { grid-template-columns: 1fr; }
   .book { width: 160px; }
   .portrait { width: 140px; }
@@ -213,7 +265,7 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
 }
 </style>
 
-<div class="proto"><strong>Maquette</strong> · première vision de la plateforme · nom « Nour » provisoire</div>
+<div class="proto"><strong>Maquette</strong> · nom « Nour » provisoire · prix d'exemple · aucun paiement ni réservation réels</div>
 
 <header class="night">
   <canvas id="sky" aria-hidden="true"></canvas>
@@ -225,7 +277,7 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
         <a href="#livre">Le livre</a>
         <a href="#booklets">Booklets</a>
         <a href="#reves">Rêves &amp; hypnose</a>
-        <a href="#seances">Séances</a>
+        <a href="#consultations">Consultations</a>
       </div>
       <div class="langs" role="group" aria-label="Langue">
         <button type="button" data-lang="fr" aria-pressed="true">FR</button>
@@ -238,10 +290,10 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
       <div class="hero-text" id="heroText">
         <span class="eyebrow" id="heroEyebrow" style="color: var(--gold)">Guidance · Guérison · Connexion</span>
         <h1 id="heroTitle">Retrouve ton <em>vrai soi</em>.</h1>
-        <p id="heroSub">Une plateforme pour guérir, comprendre tes rêves, découvrir ta mission et vivre mieux, partout dans le monde.</p>
+        <p id="heroSub">Des consultations intuitives en ligne pour guérir, comprendre tes rêves, découvrir ta mission et vivre mieux, partout dans le monde.</p>
         <div class="ctas">
-          <a class="btn btn-gold" href="#commencer" id="heroCta1">Commencer mon chemin</a>
-          <a class="btn btn-ghost" href="#livre" id="heroCta2">Découvrir le livre</a>
+          <a class="btn btn-gold" href="#consultations" id="heroCta1">Réserver une consultation</a>
+          <a class="btn btn-ghost" href="#commencer" id="heroCta2">Trouver ce dont j'ai besoin</a>
         </div>
       </div>
       <div class="moon-card">
@@ -258,7 +310,7 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
       <div class="section-head">
         <span class="eyebrow">Par où commencer</span>
         <h2>Qu'est-ce qui te pèse aujourd'hui ?</h2>
-        <p class="lede">Choisis ce qui te parle. La plateforme te propose le booklet adapté et un premier exercice à faire tout de suite.</p>
+        <p class="lede">Choisis ce qui te parle. Tu reçois un premier exercice à faire tout de suite, et le booklet adapté t'est offert avec ta consultation.</p>
       </div>
       <div class="finder">
         <div class="chips" role="group" aria-label="Choisis un besoin" id="chips"></div>
@@ -357,20 +409,21 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
         <h2>Intuitive internationale</h2>
         <p class="lede">J'accompagne chaque personne à retrouver son vrai soi, avec mon intuition, mon expérience et ma propre méthode.</p>
         <div class="creds"><span>Intuition</span><span>Hypnose &amp; auto-hypnose</span><span>Lecture des rêves</span><span>Méthode : nom à définir</span></div>
+        <div><a class="btn btn-ink" href="#consultations">Réserver avec moi</a></div>
       </div>
     </div>
   </section>
 
-  <section id="seances">
+  <section id="consultations">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Séances</span>
-        <h2>En ligne, partout dans le monde</h2>
+        <span class="eyebrow">Consultations</span>
+        <h2>Réserve ta consultation avec moi</h2>
+        <p class="lede">En visio, partout dans le monde. Chaque consultation inclut le booklet adapté à ton besoin et un suivi par écrit.</p>
       </div>
-      <div class="offers">
-        <div class="offer"><h3>Séance découverte</h3><p>Un premier échange pour comprendre ton besoin et ressentir ton énergie.</p><span class="meta">Visio · tarif à définir</span></div>
-        <div class="offer"><h3>Lecture de rêve</h3><p>Tu envoies ton rêve, je t'aide à en lire les symboles et le message.</p><span class="meta">Écrit ou visio · tarif à définir</span></div>
-        <div class="offer"><h3>Accompagnement 21 jours</h3><p>Un booklet, des séances d'hypnose et un suivi pour transformer un problème en profondeur.</p><span class="meta">Programme · tarif à définir</span></div>
+      <div class="consult">
+        <div class="offers" role="group" aria-label="Choisis ta consultation" id="offers"></div>
+        <div class="booking" id="booking" aria-live="polite"></div>
       </div>
     </div>
   </section>
@@ -417,9 +470,9 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
 
   // Langues du hero
   var copy = {
-    fr: { dir: 'ltr', eyebrow: 'Guidance · Guérison · Connexion', title: 'Retrouve ton <em>vrai soi</em>.', sub: 'Une plateforme pour guérir, comprendre tes rêves, découvrir ta mission et vivre mieux, partout dans le monde.', c1: 'Commencer mon chemin', c2: 'Découvrir le livre' },
-    en: { dir: 'ltr', eyebrow: 'Guidance · Healing · Connection', title: 'Find your <em>true self</em>.', sub: 'A platform to heal, understand your dreams, discover your mission and live better, anywhere in the world.', c1: 'Start my journey', c2: 'Discover the book' },
-    ar: { dir: 'rtl', eyebrow: 'إرشاد · شفاء · اتصال', title: 'اكتشف <em>ذاتك الحقيقية</em>', sub: 'منصة للشفاء وفهم أحلامك واكتشاف رسالتك والعيش بشكل أفضل، في أي مكان في العالم.', c1: 'ابدأ طريقك', c2: 'اكتشف الكتاب' }
+    fr: { dir: 'ltr', eyebrow: 'Guidance · Guérison · Connexion', title: 'Retrouve ton <em>vrai soi</em>.', sub: 'Des consultations intuitives en ligne pour guérir, comprendre tes rêves, découvrir ta mission et vivre mieux, partout dans le monde.', c1: 'Réserver une consultation', c2: 'Trouver ce dont j\'ai besoin' },
+    en: { dir: 'ltr', eyebrow: 'Guidance · Healing · Connection', title: 'Find your <em>true self</em>.', sub: 'Online intuitive consultations to heal, understand your dreams, discover your mission and live better, anywhere in the world.', c1: 'Book a consultation', c2: 'Find what I need' },
+    ar: { dir: 'rtl', eyebrow: 'إرشاد · شفاء · اتصال', title: 'اكتشف <em>ذاتك الحقيقية</em>', sub: 'استشارات حدسية عبر الإنترنت للشفاء وفهم أحلامك واكتشاف رسالتك والعيش بشكل أفضل، في أي مكان في العالم.', c1: 'احجز استشارة', c2: 'اكتشف ما تحتاجه' }
   };
   var heroText = document.getElementById('heroText');
   document.querySelectorAll('.langs button').forEach(function (b) {
@@ -455,7 +508,8 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
       '<h3>' + n.b + '</h3>' +
       '<div class="exercise"><b>Premier exercice, maintenant</b><span>' + n.ex + '</span></div>' +
       (n.care ? '<p class="care">Pour toute douleur physique, consulte aussi un médecin.</p>' : '') +
-      '<div><a class="btn btn-ink" href="#booklets">Ouvrir le booklet</a></div>';
+      '<p class="care">Le booklet « ' + n.b + ' » t\'est offert avec ta consultation.</p>' +
+      '<div><a class="btn btn-ink" href="#consultations" data-book="' + i + '">Réserver une consultation sur ce sujet</a></div>';
   }
   needs.forEach(function (n, i) {
     var c = document.createElement('button');
@@ -497,5 +551,137 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
     if (running) { stop('On recommence ?'); return; }
     running = true; btn.textContent = 'Arrêter'; phase(1);
   });
+  // Consultations et réservation (simulation)
+  var offers = [
+    { t: 'Consultation découverte', min: 30, price: 30, d: 'Un premier échange pour comprendre ton besoin et ressentir ton énergie.', meta: 'Visio · 30 min' },
+    { t: 'Consultation intuitive', min: 60, price: 70, d: 'Guidance sur ta situation, ta mission et ton vrai soi.', meta: 'Visio · 60 min' },
+    { t: 'Séance d\'hypnose', min: 75, price: 90, d: 'Une séance guidée pour libérer un blocage et installer un nouvel état intérieur.', meta: 'Visio · 75 min' },
+    { t: 'Lecture de rêve', min: 45, price: 50, d: 'Tu racontes ton rêve, je t\'aide à en lire les symboles et le message.', meta: 'Visio · 45 min' },
+    { t: 'Accompagnement 21 jours', min: 60, price: 220, d: '3 consultations, 1 séance d\'hypnose, le booklet complet et un suivi par écrit.', meta: 'Programme · le plus complet', featured: true }
+  ];
+  var SLOTS_UTC = [8, 10, 13, 15, 18];
+  var tz = 'ton fuseau horaire';
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || tz; } catch (e) {}
+  var bk = { step: 2, offer: 1, day: null, slot: null, name: '', email: '', topic: '', consent: false, booklet: null, err: '' };
+  var offersEl = document.getElementById('offers'), booking = document.getElementById('booking');
+
+  function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function days() {
+    var out = [], now = new Date();
+    for (var i = 1; i <= 7; i++) out.push(new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + i)));
+    return out;
+  }
+  function slotDate(di, si) { var d = days()[di]; return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), SLOTS_UTC[si])); }
+  function taken(di, si) { return (di * 3 + si) % 4 === 1; }
+  function fmtDay(d) { return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' }); }
+  function fmtTime(d) { return d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); }
+
+  offers.forEach(function (o, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'offer' + (o.featured ? ' featured' : '');
+    b.innerHTML = '<h3>' + o.t + '</h3><span class="price">' + o.price + ' €</span><p>' + o.d + '</p><span class="meta">' + o.meta + '</span>';
+    b.addEventListener('click', function () {
+      bk.offer = i; bk.step = 2; bk.err = ''; render();
+      if (window.innerWidth < 860) booking.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+    offersEl.appendChild(b);
+  });
+  var note = document.createElement('p');
+  note.className = 'price-note'; note.textContent = 'Prix d\'exemple en euros. Tu fixeras tes vrais tarifs.';
+  offersEl.appendChild(note);
+
+  function stepper() {
+    var names = ['Consultation', 'Date & heure', 'Tes infos', 'Paiement'];
+    return '<ol class="stepper">' + names.map(function (n, i) {
+      var k = i + 1, c = k < bk.step ? 'done' : (k === bk.step ? 'now' : '');
+      return '<li class="' + c + '">' + k + '. ' + n + '</li>';
+    }).join('') + '</ol>';
+  }
+
+  function render() {
+    offersEl.querySelectorAll('.offer').forEach(function (b, i) { b.setAttribute('aria-pressed', i === bk.offer ? 'true' : 'false'); });
+    var o = offers[bk.offer], h = '';
+    if (bk.step === 2) {
+      h = stepper() + '<h3>' + (o.featured ? 'Date de ta première consultation' : 'Choisis ta date') + '</h3>' +
+        '<div class="days">' + days().map(function (d, i) {
+          return '<button type="button" class="pick" data-day="' + i + '" aria-pressed="' + (bk.day === i) + '"><small>' +
+            d.toLocaleDateString('fr-FR', { weekday: 'short', timeZone: 'UTC' }) + '</small>' +
+            d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', timeZone: 'UTC' }) + '</button>';
+        }).join('') + '</div>';
+      if (bk.day !== null) {
+        h += '<div class="slots">' + SLOTS_UTC.map(function (_, si) {
+          var t = taken(bk.day, si);
+          return '<button type="button" class="pick" data-slot="' + si + '" aria-pressed="' + (bk.slot === si) + '"' + (t ? ' disabled aria-label="Complet"' : '') + '>' + fmtTime(slotDate(bk.day, si)) + '</button>';
+        }).join('') + '</div>';
+      } else {
+        h += '<p class="hint">Choisis un jour pour voir les horaires libres.</p>';
+      }
+      h += '<p class="tz">Horaires affichés dans ton fuseau horaire : ' + esc(tz) + '. Les créneaux barrés sont complets.</p>' +
+        '<div class="actions"><span class="hint">' + o.t + ' · ' + o.price + ' €</span>' +
+        '<button type="button" class="btn btn-ink" data-go="3"' + (bk.slot === null ? ' disabled' : '') + '>Continuer</button></div>';
+    } else if (bk.step === 3) {
+      h = stepper() + '<h3>Tes informations</h3>' +
+        '<form id="bkForm" class="field" style="gap:14px" novalidate>' +
+        '<div class="field"><label for="bkName">Prénom</label><input id="bkName" autocomplete="given-name" value="' + esc(bk.name) + '"></div>' +
+        '<div class="field"><label for="bkEmail">Email</label><input id="bkEmail" type="email" autocomplete="email" value="' + esc(bk.email) + '"></div>' +
+        '<div class="field"><label for="bkTopic">Ce que tu veux travailler</label><textarea id="bkTopic" placeholder="Décris en quelques mots ta situation ou ton rêve.">' + esc(bk.topic) + '</textarea></div>' +
+        '<label class="consent" for="bkConsent"><input type="checkbox" id="bkConsent"' + (bk.consent ? ' checked' : '') + '>' +
+        '<span>Je comprends que cette consultation complète un suivi médical ou psychologique, sans le remplacer.</span></label>' +
+        (bk.err ? '<p class="care" style="color:var(--accent)">' + bk.err + '</p>' : '') +
+        '<div class="actions"><button type="button" class="link-btn" data-go="2">Retour</button>' +
+        '<button type="submit" class="btn btn-ink">Voir le récapitulatif</button></div></form>';
+    } else if (bk.step === 4) {
+      var sd = slotDate(bk.day, bk.slot);
+      h = stepper() + '<h3>Récapitulatif</h3>' +
+        '<dl class="recap"><dt>Consultation</dt><dd>' + o.t + '</dd>' +
+        '<dt>Date</dt><dd>' + fmtDay(days()[bk.day]) + '</dd>' +
+        '<dt>Heure</dt><dd>' + fmtTime(sd) + ' (' + esc(tz) + ')</dd>' +
+        '<dt>Durée</dt><dd>' + o.min + ' min' + (o.featured ? ' par consultation' : '') + '</dd>' +
+        '<dt>Pour</dt><dd>' + esc(bk.name) + '</dd>' +
+        '<dt>Total</dt><dd class="total">' + o.price + ' €</dd></dl>' +
+        '<div class="paynote"><strong>Paiement à connecter.</strong> Dans la vraie plateforme, la personne paie ici en ligne, de façon sécurisée, avant que la réservation soit confirmée. Aucun paiement n\'est demandé dans cette maquette.</div>' +
+        '<div class="actions"><button type="button" class="link-btn" data-go="3">Retour</button>' +
+        '<button type="button" class="btn btn-gold" data-go="5">Simuler le paiement</button></div>';
+    } else {
+      h = '<div class="done-mark" aria-hidden="true">✓</div><h3>Réservation confirmée</h3>' +
+        '<p class="lede">Dans la vraie plateforme, ' + esc(bk.name || 'la personne') + ' recevrait maintenant un email avec le lien de la visio, le booklet « ' + esc(bk.booklet || 'adapté à son besoin') + ' » et un rappel la veille.</p>' +
+        '<p class="hint">Simulation : rien n\'a été envoyé ni payé.</p>' +
+        '<div><button type="button" class="btn btn-ink" data-reset="1">Nouvelle réservation</button></div>';
+    }
+    booking.innerHTML = h;
+    var f = document.getElementById('bkForm');
+    if (f) {
+      ['bkName', 'bkEmail', 'bkTopic'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', function (e) { bk[{ bkName: 'name', bkEmail: 'email', bkTopic: 'topic' }[id]] = e.target.value; });
+      });
+      document.getElementById('bkConsent').addEventListener('change', function (e) { bk.consent = e.target.checked; });
+      f.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!bk.name.trim()) bk.err = 'Indique ton prénom.';
+        else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(bk.email.trim())) bk.err = 'Indique une adresse email valide, par exemple prenom@email.com.';
+        else if (!bk.consent) bk.err = 'Coche la case pour confirmer que tu as lu la mention.';
+        else { bk.err = ''; bk.step = 4; }
+        render();
+      });
+    }
+  }
+
+  booking.addEventListener('click', function (e) {
+    var t = e.target.closest('button'); if (!t) return;
+    if (t.dataset.day !== undefined) { bk.day = +t.dataset.day; bk.slot = null; render(); }
+    else if (t.dataset.slot !== undefined) { bk.slot = +t.dataset.slot; render(); }
+    else if (t.dataset.go) { bk.step = +t.dataset.go; bk.err = ''; render(); }
+    else if (t.dataset.reset) { bk = { step: 2, offer: 1, day: null, slot: null, name: '', email: '', topic: '', consent: false, booklet: null, err: '' }; render(); }
+  });
+
+  result.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-book]'); if (!a) return;
+    var n = needs[+a.dataset.book];
+    bk.offer = 1; bk.step = 2; bk.booklet = n.b;
+    if (!bk.topic) bk.topic = n.k + ' : ';
+    render();
+  });
+
+  render();
 })();
 </script>

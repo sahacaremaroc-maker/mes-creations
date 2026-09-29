@@ -19,6 +19,17 @@ Le tout nourri par mes insights et mon expérience.
 2. **Les booklets** : des livrets courts et pratiques, un par problème
    (ex. anxiété, sommeil, confiance en soi, rêves, deuil…).
 
+## Modèle : les consultations payantes
+Le cœur de la plateforme : **les personnes paient pour une consultation avec moi**.
+Tout le reste (livre, booklets, journal des rêves, exercices) donne envie de réserver
+et enrichit chaque consultation.
+
+- Consultation découverte, consultation intuitive, séance d'hypnose, lecture de rêve
+- Accompagnement 21 jours (programme complet)
+- Chaque consultation inclut le booklet adapté au besoin
+- Réservation en ligne : choix du créneau (dans le fuseau horaire de la personne), infos, paiement sécurisé
+- À décider : mes vrais tarifs, la devise, l'outil de paiement selon mon pays
+
 ## Principes
 - Construire au fur et à mesure, une brique à la fois.
 - Accessible partout dans le monde (multilingue à terme : FR / EN / AR…).
