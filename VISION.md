@@ -38,7 +38,7 @@ et enrichit chaque consultation.
   psychologique professionnel (mention à afficher sur la plateforme).
 
 ## Étapes possibles (plus tard)
-- [ ] Déposer le livre dans `livre/`
+- [x] Relier le livre « La lampe » (المصباح) à la plateforme
 - [x] Définir la liste des premiers booklets
 - [x] Rédiger les 8 premiers booklets
 - [ ] Créer une page d'accueil simple

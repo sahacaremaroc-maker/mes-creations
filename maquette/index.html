@@ -40,6 +40,7 @@
 }
 
 * { box-sizing: border-box; }
+img { max-width: 100%; height: auto; display: block; }
 body {
   background: var(--bg); color: var(--ink);
   font-family: var(--font-body); font-size: var(--step-0); line-height: 1.6;
@@ -141,6 +142,21 @@ section { padding-block: clamp(56px, 9vw, 96px); }
 .book-text h2 { font-size: var(--step-3); }
 .steps { display: flex; flex-wrap: wrap; gap: 8px; }
 .steps span { font-size: .85rem; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+
+.cover { width: 220px; max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 24px 50px rgba(16,20,42,.3); }
+.ar-title { font-family: var(--font-ar); color: var(--accent); font-size: .8em; margin-inline-start: 10px; }
+.book-sub { color: var(--muted); font-style: italic; }
+.book-buy { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.book-price { font-family: var(--font-display); font-size: 1.6rem; font-variant-numeric: tabular-nums; }
+.book-price small { font-family: var(--font-body); font-size: .8rem; color: var(--muted); }
+.parts { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+.parts li { display: grid; gap: 6px; align-content: start; border-top: 2px solid var(--line); padding-top: 12px; font-size: .9rem; color: var(--muted); }
+.parts li b { color: var(--ink); font-size: .95rem; }
+.parts li.guide-part { border-color: var(--accent); }
+.previews { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
+.previews figure { margin: 0; display: grid; gap: 8px; }
+.previews img { border-radius: 8px; border: 1px solid var(--line); }
+.previews figcaption { font-size: .82rem; color: var(--muted); text-align: center; }
 
 /* Bibliothèque de booklets */
 .shelf { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
@@ -277,6 +293,9 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
   .moon-card { order: -1; }
   .moon { width: 140px; }
   .shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .parts { grid-template-columns: 1fr; }
+  .previews { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .cover { width: 170px; }
   .consult { grid-template-columns: 1fr; }
   .stepper li { font-size: .68rem; }
   .pillars { grid-template-columns: 1fr; }
@@ -361,17 +380,33 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
   </section>
 
   <section id="livre" style="background: var(--surface)">
-    <div class="wrap book-row">
-      <div class="book" role="img" aria-label="Couverture du livre fondateur">
-        <span class="a">Le livre fondateur</span>
-        <span class="t">Titre à venir</span>
-        <span class="a">Nour</span>
+    <div class="wrap">
+      <div class="book-row">
+        <img class="cover" src="misbah/cover_fr.png" alt="Couverture du livre La lampe : une lanterne allumée dans un ciel de nuit" width="643" height="907">
+        <div class="book-text">
+          <span class="eyebrow">Le livre fondateur</span>
+          <h2>La lampe <span class="ar-title" lang="ar">المِصباح</span></h2>
+          <p class="book-sub">De l'enfer intérieur au jardin retrouvé · par Chahlaa Hadny</p>
+          <p class="lede">Beaucoup de nos symptômes ont commencé comme des solutions intelligentes à de vrais problèmes, avant de perdre leur souplesse et de devenir des prisons. Ce livre décrit la souffrance de l'intérieur, et c'est de là que part le chemin du retour.</p>
+          <div class="steps"><span><bdi lang="ar">العربية</bdi> · 101 p.</span><span>Français · 101 p.</span><span>English · 98 p.</span></div>
+          <div class="book-buy">
+            <span class="book-price">33 DH <small>≈ 3 €</small></span>
+            <a class="btn btn-ink" href="https://claude.ai/artifact/HkwUM517DB2rQHYKstWYDj">Obtenir le livre</a>
+            <a class="link-btn" href="https://claude.ai/artifact/HkwUM517DB2rQHYKstWYDj">Extrait gratuit (15 pages)</a>
+          </div>
+        </div>
       </div>
-      <div class="book-text">
-        <span class="eyebrow">Le livre</span>
-        <h2>La base de toute la plateforme</h2>
-        <p class="lede">Ton livre porte ta vision et ta méthode. Chaque booklet en reprend un chapitre et le transforme en programme pratique, jour après jour.</p>
-        <div class="steps"><span>Lire en ligne</span><span>Version papier</span><span>FR · EN · AR</span></div>
+      <ol class="parts">
+        <li><b>1 · L'enfer</b><span>La carte de l'obscurité : ce que l'on vit quand les lumières s'éteignent.</span></li>
+        <li><b>2 · L'humain dans toutes ses dimensions</b><span>Corps, pensée, émotion, lien, sens, culture, conditions de vie, sacré.</span></li>
+        <li><b>3 · Le chemin</b><span>Sept étapes : nommer, sécuriser, être vu, faire le deuil, le petit pas, l'intégration, le don.</span></li>
+        <li><b>4 · Le jardin possible</b><span>Les cinq capacités retrouvées et une charte en douze points.</span></li>
+        <li class="guide-part"><b>+ Guide du lecteur</b><span>La boussole des huit dimensions, les cinq feux et un plan de 30 jours.</span></li>
+      </ol>
+      <div class="previews">
+        <figure><img src="misbah/apercu_2_dimensions.png" alt="Page du livre : l'étoile à huit dimensions" loading="lazy"><figcaption>L'étoile à huit dimensions</figcaption></figure>
+        <figure><img src="misbah/apercu_3_chemin.png" alt="Page du livre : la carte du retour en sept étapes" loading="lazy"><figcaption>La carte du retour</figcaption></figure>
+        <figure><img src="misbah/apercu_4_guide.png" alt="Page du guide du lecteur : la boussole des huit dimensions" loading="lazy"><figcaption>La boussole du guide</figcaption></figure>
       </div>
     </div>
   </section>
@@ -428,10 +463,10 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
     <div class="wrap guide">
       <div class="portrait">Ta photo ici</div>
       <div class="guide-text">
-        <span class="eyebrow">Ta guide</span>
-        <h2>Intuitive internationale</h2>
-        <p class="lede">J'accompagne chaque personne à retrouver son vrai soi, avec mon intuition, mon expérience et ma propre méthode.</p>
-        <div class="creds"><span>Intuition</span><span>Hypnose &amp; auto-hypnose</span><span>Lecture des rêves</span><span>Méthode : nom à définir</span></div>
+        <span class="eyebrow">Ta guide · intuitive internationale</span>
+        <h2>Chahlaa Hadny <span class="ar-title" lang="ar">شهلاء حاضني</span></h2>
+        <p class="lede">Dix ans infirmière au chevet des patients, des années d'études en psychologie, et une expérience personnelle de l'obscurité. Aujourd'hui, j'accompagne chaque personne à retrouver son vrai soi, avec mon intuition et ma propre méthode.</p>
+        <div class="creds"><span>Autrice de « La lampe »</span><span>Intuition</span><span>Hypnose &amp; auto-hypnose</span><span>Lecture des rêves</span><span>Méthode : nom à définir</span></div>
         <div><a class="btn btn-ink" href="#consultations">Réserver avec moi</a></div>
       </div>
     </div>
@@ -460,7 +495,7 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
 <footer>
   <div class="wrap foot">
     <p class="ethic">Cet accompagnement complète un suivi médical ou psychologique, sans le remplacer. En cas de souffrance grave, contacte un professionnel de santé.</p>
-    <p>Nour · Guidance intuitive · FR · EN · عربي · Première vision, septembre 2026</p>
+    <p>Nour · Guidance intuitive · © Chahlaa Hadny · Casablanca · FR · EN · عربي · Première vision, septembre 2026</p>
   </div>
 </footer>
 
@@ -558,14 +593,14 @@ footer { border-top: 1px solid var(--line); padding-block: 36px; }
     document.getElementById('readerMeta').textContent = 'Booklet n°' + b.n + ' · ' + b.besoin + ' · ' + b.duree + ' jours';
     document.getElementById('readerBody').innerHTML =
       '<h2 id="readerTitle">' + b.titre + '</h2><p class="sub">' + b.sousTitre + '</p>' + b.html +
-      '<div class="reader-end"><p class="hint">Dans la vraie plateforme, ce booklet est offert avec ta consultation.</p>' +
+      '<div class="reader-end"><p class="hint">Pour approfondir : le livre <a href="#livre" data-close-reader="1">La lampe</a>. Dans la vraie plateforme, ce booklet est offert avec ta consultation.</p>' +
       '<div><a class="btn btn-ink" href="#consultations" data-book-reader="' + i + '">Réserver une consultation sur ce sujet</a></div></div>';
     reader.showModal();
     reader.scrollTop = 0;
   }
   document.getElementById('readerClose').addEventListener('click', function () { reader.close(); });
   reader.addEventListener('click', function (e) {
-    if (e.target === reader) { reader.close(); return; }
+    if (e.target === reader || e.target.closest('[data-close-reader]')) { reader.close(); return; }
     var a = e.target.closest('[data-book-reader]');
     if (a) { reader.close(); bookFor(+a.dataset.bookReader); }
   });
