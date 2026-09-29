@@ -1,0 +1,203 @@
+<title>Grimoires</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Grimoires">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#120E1C">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout : un livre à la chandelle. Accueil = étagère des grimoires ; grimoire = sommaire ; sort = une page à la fois. Nuit uniquement, par choix. */
+:root {
+  --night: #120E1C; --night-2: #1C1629; --page: #EDE3CF; --page-dim: #B8AE9C;
+  --gold: #D9B86C; --gold-soft: rgba(217,184,108,.35); --moon: #ECE6F5; --line: rgba(237,227,207,.12);
+  --display: "IM Fell English", "Palatino Linotype", Georgia, serif;
+  --body: "EB Garamond", Garamond, Georgia, serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--night); color: var(--page); font-family: var(--body); font-size: 19px; line-height: 1.55; -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+.app { max-width: 620px; margin-inline: auto; min-height: 100%; padding-inline: 18px; padding-block: 0 40px; display: flex; flex-direction: column; }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--night); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.brand { font-family: var(--display); font-size: 1.5rem; color: var(--gold); letter-spacing: .02em; }
+.back { font-size: .95rem; color: var(--page-dim); display: inline-flex; align-items: center; gap: 6px; padding: 6px 0; }
+.moonchip { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--page-dim); text-align: right; line-height: 1.2; }
+.moonchip svg { width: 30px; height: 30px; flex: none; }
+h1, h2 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; line-height: 1.15; }
+.view { display: grid; gap: 22px; padding-top: 26px; }
+.eyebrow { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.muted { color: var(--page-dim); }
+p { margin: 0; }
+
+/* Étagère */
+.tome { display: grid; grid-template-columns: 84px 1fr; gap: 18px; align-items: center; text-align: left; width: 100%;
+  background: var(--night-2); border: 1px solid var(--gold-soft); border-radius: 14px; padding: 16px; }
+.spine { width: 84px; aspect-ratio: 3 / 4; border-radius: 4px 10px 10px 4px; background: linear-gradient(160deg, #3A2B55, #1F1733); border: 1px solid var(--gold-soft); display: grid; place-items: center; box-shadow: inset 6px 0 0 rgba(0,0,0,.3); }
+.spine svg { width: 44px; height: 44px; }
+.tome h2 { font-size: 1.45rem; color: var(--moon); }
+.tome .count { font-size: .9rem; color: var(--gold); }
+.soon { border: 1px dashed var(--line); border-radius: 14px; padding: 16px; font-size: .95rem; color: var(--page-dim); text-align: center; }
+.resume { display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; text-align: left; border-radius: 12px; padding: 12px 16px; background: rgba(217,184,108,.1); color: var(--page); font-size: .95rem; }
+.resume b { color: var(--gold); font-weight: 500; }
+
+/* Sommaire */
+.moonline { font-style: italic; color: var(--page-dim); }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.filters button { font-size: .9rem; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--line); color: var(--page-dim); }
+.filters button[aria-pressed="true"] { border-color: var(--gold); color: var(--night); background: var(--gold); }
+.toc { list-style: none; margin: 0; padding: 0; display: grid; }
+.toc button { width: 100%; display: grid; grid-template-columns: 2.2rem 1fr auto; gap: 10px; align-items: baseline; text-align: left; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.toc .num { font-family: var(--display); color: var(--gold); font-size: 1.1rem; }
+.toc .t { font-family: var(--display); font-size: 1.2rem; color: var(--moon); }
+.toc .i { display: block; font-size: .9rem; color: var(--page-dim); }
+.toc .star { color: var(--gold); font-size: .9rem; }
+
+/* Page d'un sort */
+.leaf { display: grid; gap: 18px; }
+.leaf .tag { font-size: .85rem; letter-spacing: .08em; color: var(--gold); }
+.leaf h1 { font-size: 2.1rem; color: var(--moon); }
+.leaf .intent { font-size: 1.15rem; font-style: italic; }
+.leaf h3 { font-family: var(--display); font-weight: 400; font-size: 1.2rem; color: var(--gold); margin: 6px 0 0; }
+.leaf ul, .leaf ol { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; }
+.formule { font-family: var(--display); font-style: italic; font-size: 1.35rem; line-height: 1.4; color: var(--gold); text-align: center; padding: 22px 12px; border-block: 1px solid var(--gold-soft); }
+.care { font-size: .9rem; color: var(--page-dim); text-align: center; }
+.pager { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; padding-top: 6px; }
+.pager button { font-size: .95rem; color: var(--page-dim); padding: 10px 0; }
+.pager button:last-child { text-align: right; }
+.pager button:disabled { opacity: .25; cursor: default; }
+.pager .pos { font-size: .85rem; color: var(--gold); font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: no-preference) { .view { animation: turn .35s ease; } }
+@keyframes turn { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+</style>
+
+<div class="app">
+  <header class="top">
+    <div id="left"><span class="brand">Grimoires</span></div>
+    <div class="moonchip" id="moonchip"></div>
+  </header>
+  <main id="view" class="view"></main>
+</div>
+
+<script>
+const SPELLS=[
+ {n:"Le Cercle de Protection",k:"fa",i:"Te sentir en sécurité chez toi ou en toi.",m:["Une poignée de sel","Une bougie blanche","Une soucoupe"],s:["Pose la bougie sur la soucoupe, au centre d'une table.","Trace un cercle de sel autour, dans le sens des aiguilles d'une montre.","Allume la bougie et imagine une lumière blanche qui grandit jusqu'à t'envelopper.","Dis la formule trois fois, puis reste assise quelques minutes.","Éteins la bougie. Le sel peut être jeté dehors, au seuil de ta porte."],f:"Ce cercle me garde. Rien de sombre n'entre. Seule la lumière demeure."},
+ {n:"Le Bocal à Intentions",k:"n",i:"Semer un désir qui grandira avec la lune.",m:["Un petit bocal","Un papier et un stylo","Une pincée de sucre ou de riz","Lavande ou romarin"],s:["Écris ton intention au présent : « Je suis… », « J'ai… ».","Plie le papier vers toi, trois fois.","Place-le dans le bocal avec le sucre et les herbes.","Ferme, tiens le bocal contre ton cœur et dis la formule.","Garde le bocal près de ton lit jusqu'à la pleine lune."],f:"Ce que je sème dans l'ombre grandira dans la lumière."},
+ {n:"La Feuille de Laurier",k:"w",i:"Attirer une chance, une réussite, un examen réussi.",m:["Une feuille de laurier sèche","Un stylo"],s:["Écris sur la feuille un seul mot : ce que tu veux attirer.","Souffle doucement dessus en pensant au moment où ce sera vrai.","Dis la formule.","Glisse-la dans ton portefeuille ou ta trousse jusqu'à ce que le vœu s'accomplisse."],f:"Que ce qui est bon pour moi vienne vers moi, au bon moment."},
+ {n:"Le Courage du Dragon",k:"w",i:"Trouver la force de parler, d'oser, de partir.",m:["Une bougie orange ou rouge","Un bâton de cannelle"],s:["Allume la bougie et tiens la cannelle dans ta main droite.","Pense à la chose qui te fait peur. Respire profondément trois fois.","Imagine un feu doux dans ton ventre qui monte jusqu'à ta gorge.","Dis la formule à voix haute, fort.","Garde la cannelle sur toi le jour où tu dois oser."],f:"J'ai en moi le feu du dragon. Ma voix compte. Je n'ai pas peur."},
+ {n:"Le Miroir d'Amour de Soi",k:"wf",i:"Réparer le regard que tu poses sur toi.",m:["Un miroir","Une bougie rose, ou n'importe quelle lumière douce"],s:["Allume la bougie à côté du miroir.","Regarde-toi dans les yeux pendant une minute, sans juger.","Dis trois qualités que tu as vraiment, à voix haute.","Termine par la formule, en souriant même si c'est difficile."],f:"Je me vois. Je me choisis. Je suis assez."},
+ {n:"Le Bain de Lune",k:"f",i:"Se purifier et se recharger.",m:["Un bol d'eau","Une fenêtre ou un balcon","Quelques pétales ou une pincée de sel"],s:["Pose le bol d'eau à la lumière de la lune pendant la nuit.","Au matin, ajoute les pétales ou le sel.","Verse cette eau dans ton bain, ou passe-la sur tes mains et ton visage.","Dis la formule en sentant l'eau."],f:"L'eau de la lune me lave de ce qui ne m'appartient pas."},
+ {n:"Couper le Lien",k:"d",i:"Se détacher d'une personne ou d'une habitude qui fait mal.",m:["Une ficelle","Deux petits objets : un pour toi, un pour le lien","Des ciseaux"],s:["Attache la ficelle entre les deux objets.","Regarde-la et dis ce que ce lien t'a pris.","Remercie pour la leçon, même si elle a été dure.","Coupe la ficelle au milieu en disant la formule.","Jette la moitié du lien, garde ton objet avec toi."],f:"Je te rends ce qui est à toi. Je reprends ce qui est à moi."},
+ {n:"La Lettre à l'Eau",k:"d",i:"Laisser partir une peine, une colère, un regret.",m:["Un papier","Un stylo","Un bol d'eau"],s:["Écris tout ce qui fait mal, sans te censurer.","Déchire le papier en petits morceaux.","Plonge-les dans l'eau et regarde l'encre se défaire.","Dis la formule, puis verse l'eau dans l'évier ou la terre."],f:"Je dépose ma peine. L'eau l'emporte. Je reste légère."},
+ {n:"La Métamorphose du Papillon",k:"nd",i:"Accompagner un grand changement de vie.",m:["Une feuille","Des crayons"],s:["À gauche, dessine une chenille et écris ce que tu quittes.","Au milieu, dessine un cocon et écris ce que tu traverses.","À droite, dessine un papillon et écris qui tu deviens.","Plie la feuille pour que le papillon soit sur le dessus, et dis la formule."],f:"Je laisse la chenille. Je traverse le cocon. Je deviens les ailes."},
+ {n:"Le Sachet du Chat Gardien",k:"a",i:"Protéger ta porte et ton sommeil.",m:["Un petit tissu ou un sachet","Du sel","Trois clous de girofle","Une feuille de laurier"],s:["Mets le sel, les clous de girofle et le laurier dans le sachet.","Ferme-le avec trois nœuds.","À chaque nœud, dis la formule.","Accroche-le près de la porte, ou pose-le sous ton oreiller."],f:"Comme le chat veille la nuit, ce sachet veille sur moi."},
+ {n:"Le Sommeil Paisible",k:"a",i:"Dormir quand les pensées tournent.",m:["De la lavande","Un verre d'eau","Un papier"],s:["Écris sur le papier tout ce qui tourne dans ta tête.","Pose-le loin du lit, face contre la table.","Mets un brin de lavande sous ton oreiller.","Pose le verre d'eau près du lit : il recueille les mauvais rêves. Vide-le au matin.","Dis la formule les yeux fermés."],f:"La nuit me berce. Rien ne me trouble. Je me repose en paix."},
+ {n:"L'Appel aux Anges",k:"a",i:"Demander de l'aide quand on se sent seule.",m:["Une bougie blanche","Un moment de silence"],s:["Allume la bougie et pose tes mains ouvertes sur tes genoux.","Nomme à voix basse ce dont tu as besoin.","Dis la formule, puis reste dans le silence au moins trois respirations.","Observe les signes des trois jours suivants : une plume, un mot, une rencontre."],f:"Anges de lumière, entourez-moi. Mikaïl, apporte la pluie sur mon cœur sec."}
+];
+const KLBL = { n: "nouvelle lune", w: "lune croissante", f: "pleine lune", d: "lune décroissante", a: "toute lune" };
+const KIND = { n: "La nouvelle lune est le temps de semer une intention dans le noir.", w: "La lune croissante attire : c'est le temps d'appeler ce que tu désires.", f: "La pleine lune révèle et charge : c'est le temps de protéger, de célébrer, de voir clair.", d: "La lune décroissante emporte : c'est le temps de laisser partir et de couper les liens." };
+const GRIMOIRES = [{ id: "sorts-doux", titre: "Le Grimoire des sorts doux", desc: "Douze sorts doux, accordés aux phases de la lune.", sorts: SPELLS }];
+
+const SYN = 29.530588853, REF = Date.UTC(2000, 0, 6, 18, 14) / 864e5;
+function moon() {
+  const age = ((Date.now() / 864e5 - REF) % SYN + SYN) % SYN, p = age / SYN;
+  const names = ["Nouvelle lune", "Premier croissant", "Premier quartier", "Lune gibbeuse croissante", "Pleine lune", "Lune gibbeuse décroissante", "Dernier quartier", "Dernier croissant"];
+  const idx = Math.floor(p * 8 + .5) % 8;
+  return { p, name: names[idx], kind: idx === 0 ? "n" : idx === 4 ? "f" : idx < 4 ? "w" : "d" };
+}
+function moonSVG(p) {
+  const cx = 42, cy = 42, r = 34, rx = Math.abs(Math.cos(2 * Math.PI * p)) * r;
+  const d = p < .5
+    ? `M${cx} ${cy - r}A${r} ${r} 0 0 1 ${cx} ${cy + r}A${rx} ${r} 0 0 ${p < .25 ? 0 : 1} ${cx} ${cy - r}z`
+    : `M${cx} ${cy - r}A${r} ${r} 0 0 0 ${cx} ${cy + r}A${rx} ${r} 0 0 ${p > .75 ? 1 : 0} ${cx} ${cy - r}z`;
+  return `<svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="34" fill="#271f40" stroke="#d9b86c55"/><path d="${d}" fill="#ece6f5"/></svg>`;
+}
+
+const M = moon();
+const view = document.getElementById("view"), left = document.getElementById("left");
+document.getElementById("moonchip").innerHTML = `<span>Ce soir<br>${M.name}</span>` + moonSVG(M.p);
+
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem("grimoires:" + k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem("grimoires:" + k, JSON.stringify(v)); } catch (e) {} }
+};
+let state = { g: null, i: null, filtre: false };
+const fits = s => s.k.includes(M.kind) || s.k.includes("a");
+
+function header(backLabel, onBack) {
+  left.innerHTML = backLabel ? `<button class="back" id="back">‹ ${backLabel}</button>` : `<span class="brand">Grimoires</span>`;
+  if (onBack) document.getElementById("back").onclick = onBack;
+}
+function go(s) { state = Object.assign(state, s); render(); window.scrollTo(0, 0); }
+
+function render() {
+  if (state.g === null) return home();
+  if (state.i === null) return sommaire();
+  return page();
+}
+
+function home() {
+  header();
+  const last = store.get("dernier");
+  view.innerHTML =
+    `<div><span class="eyebrow">Ma bibliothèque</span><h1 style="font-size:2rem;margin-top:6px">Mes grimoires</h1></div>` +
+    (last && GRIMOIRES[last.g] && GRIMOIRES[last.g].sorts[last.i]
+      ? `<button class="resume" id="resume"><span>Reprendre ma lecture<br><b>${GRIMOIRES[last.g].sorts[last.i].n}</b></span><span aria-hidden="true">›</span></button>` : "") +
+    GRIMOIRES.map((g, gi) => `<button class="tome" data-g="${gi}"><span class="spine">${moonSVG(.3)}</span><span><h2>${g.titre}</h2><span class="muted" style="display:block;font-size:.95rem;margin:4px 0">${g.desc}</span><span class="count">${g.sorts.length} sorts · ${g.sorts.filter(fits).length} pour ce soir</span></span></button>`).join("") +
+    `<div class="soon">Tes prochains grimoires s'ajouteront ici.</div>`;
+  view.querySelectorAll("[data-g]").forEach(b => b.onclick = () => go({ g: +b.dataset.g, i: null }));
+  const r = document.getElementById("resume");
+  if (r) r.onclick = () => go({ g: last.g, i: last.i });
+}
+
+function sommaire() {
+  const g = GRIMOIRES[state.g];
+  header("Mes grimoires", () => go({ g: null, i: null }));
+  const list = g.sorts.map((s, i) => ({ s, i })).filter(x => !state.filtre || fits(x.s));
+  view.innerHTML =
+    `<div><span class="eyebrow">Grimoire</span><h1 style="font-size:2rem;margin-top:6px">${g.titre}</h1></div>` +
+    `<p class="moonline">${M.name}. ${KIND[M.kind]}</p>` +
+    `<div class="filters"><button data-f="0" aria-pressed="${!state.filtre}">Tous les sorts</button><button data-f="1" aria-pressed="${state.filtre}">✦ Pour ce soir</button></div>` +
+    `<ol class="toc">` + list.map(x => `<li><button data-i="${x.i}"><span class="num">${x.i + 1}</span><span><span class="t">${x.s.n}</span><span class="i">${x.s.i}</span></span><span class="star">${fits(x.s) ? "✦" : ""}</span></button></li>`).join("") + `</ol>`;
+  view.querySelectorAll("[data-f]").forEach(b => b.onclick = () => go({ filtre: b.dataset.f === "1" }));
+  view.querySelectorAll("[data-i]").forEach(b => b.onclick = () => go({ i: +b.dataset.i }));
+}
+
+function page() {
+  const g = GRIMOIRES[state.g], s = g.sorts[state.i], n = g.sorts.length;
+  store.set("dernier", { g: state.g, i: state.i });
+  header("Sommaire", () => go({ i: null }));
+  const tags = [...s.k].map(c => KLBL[c]).join(" · ");
+  view.innerHTML =
+    `<article class="leaf">` +
+    `<span class="tag">${fits(s) ? "✦ Pour ce soir · " : ""}${tags}</span>` +
+    `<h1>${s.n}</h1><p class="intent">${s.i}</p>` +
+    `<h3>Matériel</h3><ul>${s.m.map(x => `<li>${x}</li>`).join("")}</ul>` +
+    `<h3>Étapes</h3><ol>${s.s.map(x => `<li>${x}</li>`).join("")}</ol>` +
+    `<p class="formule">« ${s.f} »</p>` +
+    `<p class="care">Garde toujours une flamme sous tes yeux, et éteins-la avant de dormir.</p>` +
+    `<nav class="pager" aria-label="Pages"><button id="prev" ${state.i === 0 ? "disabled" : ""}>‹ Précédent</button><span class="pos">${state.i + 1} / ${n}</span><button id="next" ${state.i === n - 1 ? "disabled" : ""}>Suivant ›</button></nav>` +
+    `</article>`;
+  document.getElementById("prev").onclick = () => state.i > 0 && go({ i: state.i - 1 });
+  document.getElementById("next").onclick = () => state.i < n - 1 && go({ i: state.i + 1 });
+}
+
+// Tourner les pages en glissant le doigt
+let x0 = null, y0 = null;
+view.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+view.addEventListener("touchend", e => {
+  if (x0 === null || state.i === null) return;
+  const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+  x0 = null;
+  if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx)) return;
+  const n = GRIMOIRES[state.g].sorts.length;
+  if (dx < 0 && state.i < n - 1) go({ i: state.i + 1 });
+  if (dx > 0 && state.i > 0) go({ i: state.i - 1 });
+});
+
+render();
+</script>

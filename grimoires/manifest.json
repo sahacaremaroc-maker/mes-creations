@@ -1,0 +1,10 @@
+{
+  "name": "Grimoires",
+  "short_name": "Grimoires",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#120E1C",
+  "theme_color": "#120E1C",
+  "lang": "fr",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
