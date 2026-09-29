@@ -12,7 +12,7 @@ Une plateforme **internationale et globale** qui aide chaque personne à :
 - **Lecture des rêves** : comprendre les messages de l'inconscient
 - **Meilleure qualité de vie** au quotidien
 
-Le tout nourri par les insights et l'expérience de l'auteure.
+Le tout nourri par mes insights et mon expérience.
 
 ## Les contenus
 1. **Le livre** : l'ouvrage fondateur, la base de toute la plateforme.
